@@ -5,10 +5,17 @@ const fs = require('fs');
 const unzipper = require('unzipper');
 const path = require('path');
 const parser = require('@asyncapi/parser');
+const ramlDtParser = require('@asyncapi/raml-dt-schema-parser');
+const openapiSchemaParser = require('@asyncapi/openapi-schema-parser');
+const avroSchemaParser = require('@asyncapi/avro-schema-parser');
 
 const SPEC_EXAMPLES_ZIP_URL = 'https://github.com/asyncapi/spec/archive/refs/tags/v2.3.0.zip';
 const EXAMPLE_DIRECTORY = path.join(__dirname, '../assets/examples');
 const TEMP_ZIP_NAME = 'spec-examples.zip';
+
+parser.registerSchemaParser(openapiSchemaParser);
+parser.registerSchemaParser(ramlDtParser);
+parser.registerSchemaParser(avroSchemaParser);
 
 const fetchAsyncAPIExamplesFromExternalURL = () => {
   return new Promise((resolve, reject) => {
